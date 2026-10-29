@@ -4,6 +4,7 @@ import streamlit as st
 from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
 import requests
+import pandas as pd
 
 from cryptography.hazmat.primitives import serialization
 
@@ -54,8 +55,9 @@ def create_snowpark_session():
 
 session = create_snowpark_session()
 
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
-#st.dataframe(data=my_dataframe, use_container_width=True)
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
+st.dataframe(data=my_dataframe, use_container_width=True)
+st.stop()
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
